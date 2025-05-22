@@ -1,15 +1,20 @@
 {
     inputs = {
-        nixpks.url = "github:NixOs/nixpkgs/nixos-24.11";
-        nixpkgs-unstable = "github:NixOs/nixpkgs-unstable";
+        nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+        nixpkgs-unstable.url = "github:NixOs/nixpkgs-unstable";
         home-manager.url = "github:nix-community/home-manager/release-24.11";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    outputs = { self, nixpkgs, home-manager, ... }@inputs:
+    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
     let
         system = "x86_64-linux";
         pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+        };
+
+        unstable = import nixpkgs-unstable {
             inherit system;
             config.allowUnfree = true;
         };
@@ -25,6 +30,10 @@
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
                     home-manager.users.shogun = import ./home/shogun.nix;
+                }
+
+                {
+                    _module.args.unstable = unstable;
                 }
             ];
         };

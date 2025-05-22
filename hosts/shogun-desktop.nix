@@ -42,8 +42,6 @@
 		# X11 keymap
 		layout = "pt";
 		xkbVariant = "";
-		displayManager.gdm.wayland = true;
-		displayManager.gdm.nvidiaWayland = true;
 	};
 
 	hardware.opengl {
@@ -76,7 +74,6 @@
 		NIXOS_OZONE_WL = "1";
 		NIXPKGS_ALLOW_UNFREE = "1";
 		WLR_NO_HARDWARE_CURSORS = "1";
-		PATH = "$HOME/.local/bin:$HOME/.config/rofi/scripts";
 		XDG_SESSION_TYPE = "wayland";
 		__GLX_VENDOR_LIBRARY_NAME = "nvidia";
 		LIBVA_DRIVER_NAME = "nvidia";
@@ -93,11 +90,13 @@
 		xwayland
 		waybar
 		kitty
+		wl-clipboard
 		wofi
 		rofi
-		wl-clipboard
 		dunst
 		wget
+		htop
+		neofetch
 		vscode
 		git
 		brave
@@ -117,12 +116,17 @@
 	programs.fish.enable = true;
 
     programs.git.enable = true;
+
+	programs.zsh.enable = true;
     
     users.users.shogun = {
         isNormalUser = true;
         openssh.authorizedKeys.keys = [];
         extraGroups = [ "wheel" "networkmanager" ];
+		shell = pkgs.zsh;
     };
+
+	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
     nix.gc = {
 		automatic = true;
