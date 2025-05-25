@@ -4,9 +4,10 @@
         nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
         home-manager.url = "github:nix-community/home-manager/release-24.11";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
+        hyprland.url = "github:hyprwm/Hyprland";
     };
 
-    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs:
+    outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, hyprland, ... }@inputs:
     let
         system = "x86_64-linux";
         pkgs = import nixpkgs {
@@ -25,16 +26,17 @@
             modules = [
                 ./hardware-configuration.nix
                 ./hosts/shogun-desktop.nix
-
+                hyprland.nixosModules.default
                 home-manager.nixosModules.home-manager
                 {
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
-                    home-manager.users.shogun = import ./home/shogun.nix;
+                    home-manager.users.shogun = import ./home/shogun/shogun.nix;
                     home-manager.extraSpecialArgs = {
                         inherit unstable;
                         inherit pkgs;
-                    }; 
+                        inherit inputs;
+                    };
                 }
             ];
         };

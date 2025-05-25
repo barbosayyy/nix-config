@@ -27,6 +27,19 @@
 		LC_TIME = "pt_PT.UTF-8";
 	};
 
+	hardware.opengl = {
+		enable = true;
+		driSupport32Bit = true;
+	};
+
+	hardware.nvidia = {
+		modesetting.enable = true;
+		open = false;
+
+		nvidiaSettings = true;
+		package = config.boot.kernelPackages.nvidiaPackages.latest;
+	};
+
     services.openssh = {
 		enable = true;
 		settings = {
@@ -42,21 +55,8 @@
 		# X11 keymap
 		layout = "pt";
 		xkbVariant = "";
-                displayManager.gdm.enable = true;
-                desktopManager.gnome.enable = true;
-	};
-
-	hardware.opengl = {
-		enable = true;
-		driSupport32Bit = true;
-	};
-
-	hardware.nvidia = {
-		modesetting.enable = true;
-		open = false;
-
-		nvidiaSettings = true;
-		package = config.boot.kernelPackages.nvidiaPackages.latest;
+		displayManager.gdm.enable = true;
+		desktopManager.gnome.enable = true;
 	};
 
 	console.keyMap = "pt-latin9";
@@ -70,49 +70,42 @@
 		pulse.enable = true;
 	};
 
-	environment.variables={
-		NIXOS_OZONE_WL = "1";
-		NIXPKGS_ALLOW_UNFREE = "1";
-		WLR_NO_HARDWARE_CURSORS = "1";
-		XDG_SESSION_TYPE = "wayland";
-		__GLX_VENDOR_LIBRARY_NAME = "nvidia";
-		LIBVA_DRIVER_NAME = "nvidia";
-		GDK_GL = "gles";
-	};
-
-	# Add unstable channel
-	# Add rclone
-
-	# Review this!
     environment.systemPackages = with pkgs; [
-        kbd
         libevdev
 		libnotify
-		hyprland
-		xwayland
-		waybar
-		kitty
-		wl-clipboard
-		wofi
-		rofi
-		dunst
-		wget
+        kbd
 		htop
 		neofetch
+		dunst
+		wget
+		rofi
+
+		xwayland
+		waybar
+		wofi
+		wl-clipboard
+		
 		vscode
 		git
 		brave
     ];
 
-    programs.steam = {
+	environment.variables={
+		NIXPKGS_ALLOW_UNFREE = "1";
+		GDK_GL = "gles";
+
+		__GLX_VENDOR_LIBRARY_NAME = "nvidia";
+		LIBVA_DRIVER_NAME = "nvidia";
+		
+		NIXOS_OZONE_WL = "1";
+		XDG_SESSION_TYPE = "wayland";
+		WLR_NO_HARDWARE_CURSORS = "1";
+	};
+
+	programs.steam = {
 		enable = true;
 		remotePlay.openFirewall = true;
 		dedicatedServer.openFirewall = true;
-	};
-
-	programs.hyprland = {
-		enable = true;
-		xwayland.enable = true;
 	};
 
 	programs.fish.enable = true;
@@ -125,7 +118,6 @@
         isNormalUser = true;
         openssh.authorizedKeys.keys = [];
         extraGroups = [ "wheel" "networkmanager" ];
-		shell = pkgs.zsh;
     };
 
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];

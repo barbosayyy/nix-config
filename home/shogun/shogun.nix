@@ -1,4 +1,4 @@
-{ config, pkgs, unstable, ... }:
+{ config, pkgs, unstable, hyprland, ... }:
 {
     home.username = "shogun";
     home.homeDirectory = "/home/shogun";
@@ -11,7 +11,22 @@
         unstable.rclone
         discord
         libreoffice
+
+		kitty
     ];
+
+    programs.hyprland = {
+		enable = true;
+		xwayland.enable = true;
+        enableNvidiaPatches = true;
+	};
+
+    programs.kitty.enable = true;
+
+    xdg.configFile."hypr/hyprland.conf".source = ./hypr/hyprland.conf;
+
+    services.dunst.enable = true;
+    services.cliphist.enable = true;
 
     home.stateVersion = "24.11";
 }
