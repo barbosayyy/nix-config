@@ -42,11 +42,12 @@
 		# X11 keymap
 		layout = "pt";
 		xkbVariant = "";
+                displayManager.gdm.enable = true;
+                desktopManager.gnome.enable = true;
 	};
 
 	hardware.opengl = {
 		enable = true;
-		driSupport = true;
 		driSupport32Bit = true;
 	};
 
@@ -58,9 +59,8 @@
 		package = config.boot.kernelPackages.nvidiaPackages.latest;
 	};
 
-	console.keyMap = "pt";
+	console.keyMap = "pt-latin9";
 
-	sound.enable = true;
 	hardware.pulseaudio.enable = false;
 	security.rtkit.enable = true;
 	services.pipewire = {
@@ -77,6 +77,7 @@
 		XDG_SESSION_TYPE = "wayland";
 		__GLX_VENDOR_LIBRARY_NAME = "nvidia";
 		LIBVA_DRIVER_NAME = "nvidia";
+		GDK_GL = "gles";
 	};
 
 	# Add unstable channel
@@ -84,6 +85,7 @@
 
 	# Review this!
     environment.systemPackages = with pkgs; [
+        kbd
         libevdev
 		libnotify
 		hyprland

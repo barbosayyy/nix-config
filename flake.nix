@@ -1,7 +1,7 @@
 {
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-        nixpkgs-unstable.url = "github:NixOs/nixpkgs-unstable";
+        nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
         home-manager.url = "github:nix-community/home-manager/release-24.11";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -21,6 +21,7 @@
     in {
         nixosConfigurations.shogun-desktop = nixpkgs.lib.nixosSystem {
             inherit system;
+            inherit pkgs;
             modules = [
                 ./hardware-configuration.nix
                 ./hosts/shogun-desktop.nix
@@ -30,10 +31,10 @@
                     home-manager.useGlobalPkgs = true;
                     home-manager.useUserPackages = true;
                     home-manager.users.shogun = import ./home/shogun.nix;
-                }
-
-                {
-                    _module.args.unstable = unstable;
+                    home-manager.extraSpecialArgs = {
+                        inherit unstable;
+                        inherit pkgs;
+                    }; 
                 }
             ];
         };

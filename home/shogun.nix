@@ -9,5 +9,9 @@
     home.packages = with pkgs; [
         obsidian
         unstable.rclone
+        discord
+        libreoffice
     ];
+
+    home.stateVersion = "24.11";
 }
