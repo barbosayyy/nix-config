@@ -1,4 +1,4 @@
-{ config, pkgs, unstable, hyprland, ... }:
+{ config, pkgs, unstable, ... }:
 {
     home.username = "shogun";
     home.homeDirectory = "/home/shogun";
@@ -7,26 +7,19 @@
     };
 
     home.packages = with pkgs; [
+        gnome-tweaks
         obsidian
         unstable.rclone
         discord
         libreoffice
-
-		kitty
     ];
 
-    programs.hyprland = {
-		enable = true;
-		xwayland.enable = true;
-        enableNvidiaPatches = true;
-	};
+    wayland.windowManager.hyprland = {
+        #extraConfig = builtins.readFile ./hypr/hyprland.conf;
+    };
 
-    programs.kitty.enable = true;
-
-    xdg.configFile."hypr/hyprland.conf".source = ./hypr/hyprland.conf;
-
-    services.dunst.enable = true;
-    services.cliphist.enable = true;
+    #services.dunst.enable = true;
+    #services.cliphist.enable = true;
 
     home.stateVersion = "24.11";
 }

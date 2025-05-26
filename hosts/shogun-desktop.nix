@@ -27,6 +27,8 @@
 		LC_TIME = "pt_PT.UTF-8";
 	};
 
+	system.tools.nixos-option.enable = true;
+
 	hardware.opengl = {
 		enable = true;
 		driSupport32Bit = true;
@@ -84,9 +86,12 @@
 		waybar
 		wofi
 		wl-clipboard
-		
+
+		wine
+		wine64
+		winetricks
+
 		vscode
-		git
 		brave
     ];
 
@@ -102,6 +107,13 @@
 		WLR_NO_HARDWARE_CURSORS = "1";
 	};
 
+	programs.appimage.enable = true;
+
+	programs.hyprland = {
+		enable = true;
+		xwayland.enable = true;
+	};
+
 	programs.steam = {
 		enable = true;
 		remotePlay.openFirewall = true;
@@ -113,11 +125,18 @@
     programs.git.enable = true;
 
 	programs.zsh.enable = true;
+
+	# Configure User - shogun
+
+	home-manager.users.shogun = {
+		programs.kitty.enable = true;
+	};
     
     users.users.shogun = {
         isNormalUser = true;
         openssh.authorizedKeys.keys = [];
         extraGroups = [ "wheel" "networkmanager" ];
+		shell = pkgs.zsh;
     };
 
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
