@@ -13,6 +13,7 @@
         pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
+            config.allowUnsupportedSystem = true;
         };
 
         unstable = import nixpkgs-unstable {
@@ -33,7 +34,6 @@
                     home-manager.useUserPackages = true;
                     home-manager.users.shogun = import ./home/shogun/shogun.nix;
                     home-manager.extraSpecialArgs = {
-                        inherit unstable;
                         inherit pkgs;
                         inherit inputs;
                     };

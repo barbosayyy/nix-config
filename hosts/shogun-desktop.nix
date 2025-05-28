@@ -87,16 +87,17 @@
 		wofi
 		wl-clipboard
 
-		wine
-		wine64
-		winetricks
-
 		vscode
 		brave
+		vesktop
+
+		wineWowPackages.waylandFull
+		winetricks
     ];
 
 	environment.variables={
 		NIXPKGS_ALLOW_UNFREE = "1";
+		NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM = "1";
 		GDK_GL = "gles";
 
 		__GLX_VENDOR_LIBRARY_NAME = "nvidia";

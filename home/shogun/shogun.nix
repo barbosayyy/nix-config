@@ -10,8 +10,8 @@
         gnome-tweaks
         obsidian
         unstable.rclone
-        discord
         libreoffice
+        unstable.wine-discord-ipc-bridge
     ];
 
     wayland.windowManager.hyprland = {
